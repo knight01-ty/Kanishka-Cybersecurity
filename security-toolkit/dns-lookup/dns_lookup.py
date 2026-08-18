@@ -1,4 +1,4 @@
-import socket
+
 import dns.resolver
 def lookup_record(domain, record_type):
     try:
@@ -8,42 +8,54 @@ def lookup_record(domain, record_type):
         return []
 
 domain=input("Enter domain: ")
-try:
-    ip = socket.gethostbyname(domain)
-    print("Domain:", domain)
-    print("IP:", ip)
-    A =lookup_record(domain, "A")
+print("Domain:", domain)
+A =lookup_record(domain, "A")
+
+if A:
+    print("IP:",A[0])
     print("A records:")
     for record in A:
-            print(record)
-    AAAA =lookup_record(domain, "AAAA")
-    print("AAAA records:")
+        print(record)
+else:
+    print("No A records found.")
+AAAA =lookup_record(domain, "AAAA")
+print("AAAA records:")
+if AAAA:
     for record in AAAA:
-            print(record)
-    CNAME = lookup_record(domain, "CNAME")
+        print(record)
+else:
+    print("No AAAA records found.")
+CNAME = lookup_record(domain, "CNAME")
 
-    print("\nCNAME records:")
-    if CNAME:
-        for record in CNAME:
-            print(record)
-    else:
-        print("No CNAME records found.")
+print("\nCNAME records:")
+if CNAME:
+    for record in CNAME:
+        print(record)
+else:
+    print("No CNAME records found.")
 
    
-    MX=lookup_record(domain, "MX")
-    print("\nMX records:")
+MX=lookup_record(domain, "MX")
+print("\nMX records:")
+if MX:
     for record in MX:
         print(record)
-    TXT=lookup_record(domain, "TXT")
-    print("\nTXT records:")
+else:
+    print("No MX records found.")
+TXT=lookup_record(domain, "TXT")
+print("\nTXT records:")
+if TXT:
     for record in TXT:
         print(record)
-    NS=lookup_record(domain, "NS")
-    print("\nNS records:")
+else:
+    print("No TXT records found.")
+NS=lookup_record(domain, "NS")
+print("\nNS records:")
+if NS:
     for record in NS:
         print(record)
+else:
+    print("No NS records found.")
 
 
    
-except socket.gaierror:
-    print("Error: Could not resolve domain.")
